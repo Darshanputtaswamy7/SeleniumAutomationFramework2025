@@ -43,19 +43,18 @@ public class BaseTest {
 
         ChromeOptions options = new ChromeOptions();
 
-        // HEADLESS MODE OPTIONS FOR AMAZON LINUX / CI
-        options.addArguments("--headless=new");
+        // HEADED MODE OPTIONS
+        // Do NOT use headless if you want GUI
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--start-maximized");
 
-        // Optional: Unique user-data-dir to avoid conflicts
-        // String uniqueProfile = "/tmp/chrome-profile-" + UUID.randomUUID();
-        // options.addArguments("--user-data-dir=" + uniqueProfile);
+        // Optional: for consistent environment
+        // options.addArguments("--user-data-dir=/tmp/chrome-profile-" + UUID.randomUUID());
 
         driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
 
         Log.info("Navigating to URL...");
         driver.get("https://admin-demo.nopcommerce.com/login");
