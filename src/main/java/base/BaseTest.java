@@ -41,10 +41,18 @@ public class BaseTest {
     public void setUp() {
         Log.info("Starting WebDriver...");
 
-        // Use a unique Chrome user data directory to avoid session conflicts
-        String uniqueProfile = "/tmp/chrome-profile-" + UUID.randomUUID();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--user-data-dir=" + uniqueProfile);
+
+        // HEADLESS MODE OPTIONS FOR AMAZON LINUX / CI
+        options.addArguments("--headless=new");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--window-size=1920,1080");
+
+        // Optional: Unique user-data-dir to avoid conflicts
+        // String uniqueProfile = "/tmp/chrome-profile-" + UUID.randomUUID();
+        // options.addArguments("--user-data-dir=" + uniqueProfile);
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
